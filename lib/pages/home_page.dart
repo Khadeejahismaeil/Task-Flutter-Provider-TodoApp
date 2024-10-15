@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:todo_app/models/todo.dart';
+import 'package:provider/provider.dart'; // Import provider package
+import 'package:todo_app/provider/todo_provider.dart';
 import 'package:todo_app/widgets/todo_tile.dart';
 
 class HomePage extends StatelessWidget {
@@ -8,6 +9,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final todoProvider =
+        Provider.of<TodoProvider>(context); // Access TodoProvider
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Todo"),
@@ -22,10 +26,14 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-          child: TodoTile(
-        todo: Todo(id: 1, title: "First ToDo"),
-      )),
+      // body: SingleChildScrollView(
+      body: ListView.builder(
+        itemCount: todoProvider.todos.length, // Use length from provider
+        itemBuilder: (context, index) {
+          final todo = todoProvider.todos[index]; // Get todo from provider
+          return TodoTile(todo: todo);
+        },
+      ),
     );
   }
 }

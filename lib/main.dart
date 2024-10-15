@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
+import 'package:provider/provider.dart'; // 1.Import provider package
 import 'package:todo_app/pages/add_page.dart';
 import 'package:todo_app/pages/home_page.dart';
+import 'package:todo_app/provider/todo_provider.dart'; // Import TodoProvider
 
 void main() {
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(
+      //1. Wrap MyApp with ChangeNotifierProvider
+      create: (context) => TodoProvider(),
+      child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routeInformationParser: _router.routeInformationParser,
-      routerDelegate: _router.routerDelegate,
+      routerConfig: _router,
       debugShowCheckedModeBanner: false,
     );
   }
