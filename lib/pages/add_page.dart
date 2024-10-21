@@ -34,8 +34,8 @@ class AddPage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                final todoProvider =
-                    Provider.of<TodoProvider>(context); // Access TodoProvider
+                final todoProvider = Provider.of<TodoProvider>(context,
+                    listen: false); // Access TodoProvider
                 todoProvider
                     .addTodo(todoController.text); // Call addTodo method
                 Navigator.pop(context); // Pop back to HomePage
